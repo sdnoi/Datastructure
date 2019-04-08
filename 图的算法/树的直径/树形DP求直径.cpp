@@ -30,7 +30,7 @@ void dfs(int x) {
         if(d[x]<d[y]+w)
             d[x]=d[y]+w;
     }
-    printf("%d ",x);
+    printf("%d ",x); //搜索完毕的点
 }
 
 void adj(int n) {
@@ -52,10 +52,10 @@ int main() {
         add(u,v,1);
         add(v,u,1);
     }
-    adj(n);
-    dfs(4);
+    adj(n); //输出邻接表，检查图建对没有
+    dfs(4);//以x为最初的根进行DFS搜索
     printf("\n");
-    for(int i=1; i<=n; ++i)
+    for(int i=1; i<=n; ++i) //每个F[i]的值代表以i为根的子树中的且经过i的最长链
         printf("%d ",f[i]);
 
     return 0;
