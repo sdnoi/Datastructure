@@ -1,5 +1,5 @@
 
-'''
+```cpp
 #include <vector>
 #include <iostream>
 #include <cstdio>
@@ -74,4 +74,4 @@ int main() {
 3 9
 9 10
 */
-'''
+```
