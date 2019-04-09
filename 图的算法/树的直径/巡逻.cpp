@@ -66,7 +66,7 @@ int main(){
       }
       printf("\n");
     }
-    u=bfs(7);v=bfs(u);
+    u=bfs(1);v=bfs(u);//因为出现了负边权,两次bfs不适用了，要用树形DP
     printf("%d,%d,%d\n",u,v,dep[v]);//直径的两个端点及长度
     return 0;
 }
