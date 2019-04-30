@@ -31,7 +31,7 @@ void dfs2(int x)
 void init(int root){dfs1(root),dfs2(root);}
 int query(int x,int y)
 {
-    for(;top[x]!=top[y];deep[top[x]]>deep[top[y]]?x=fa[top[x]]:y=fa[top[y]]);
+    for(;top[x]!=top[y];deep[top[x]]>deep[top[y]]?x=fa[top[x]]:y=fa[top[y]]);//重链的top的父亲才是另一条重链上的点，否者还是在本条重链上
     return deep[x]<deep[y]?x:y;
 }
 int n,m,x,y,v;
