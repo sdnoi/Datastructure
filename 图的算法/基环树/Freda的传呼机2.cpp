@@ -76,7 +76,7 @@ int ask(int x, int y) {
     for (int i = 13; i >= 0; i--)
         if(dep[f[x][i]] >= dep[y]) x = f[x][i];
     if (x == y)
-        return d[o] - d[p];//在同一条链上
+        return d[o] - d[p];//在同一条链上,树上两点之间的距离不一定是原图中两点之间的最近距离，因此不能用b[o]-b[p]
  
     for (int i = 13; i >= 0; i--)
         if (f[x][i] != f[y][i]) {
