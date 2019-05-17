@@ -27,7 +27,9 @@ void bfs(int s, int t) {
 	}
 }
 
-void topsort() {
+void topsort() {//从儿子到父亲向上一层层的搜索，最多到达环上点所在这层，由于环上这层的点是连通的，每个点至少有两度，因此环上的点进不了队列
+//就不能通过环上的点再拓展到其它点，
+//那么下面的过程就能求出从环上某点（不经过环上其它点）能到达的最远距离以及以这个点为根的子树（不含环上其它点）中的最长链
 	int l = 1, r = 0;
 	for (int i = 1; i <= n; i++)
 		if (du[i] == 1) q[++r] = i;
@@ -36,7 +38,7 @@ void topsort() {
 			if (du[Edge[i]] > 1) { //q[l]实际上是edge[i]的儿子
 				d[c[q[l]]] = max(d[c[q[l]]], f[q[l]] + f[Edge[i]] + Leng[i]);
 				f[Edge[i]] = max(f[Edge[i]], f[q[l]] + Leng[i]);//edge[i]能走到的最远距离
-				if (--du[Edge[i]] == 1) q[++r] = Edge[i];
+				if (--du[Edge[i]] == 1) q[++r] = Edge[i];//环上的点进不了队
 			}
 		++l;
 	}
