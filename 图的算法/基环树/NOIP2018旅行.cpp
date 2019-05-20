@@ -43,7 +43,7 @@ int main(){
     scanf("%d%d",&n,&m);
     for(int i=1;i<=m;i++){
         int u,v;scanf("%d%d",&u,&v);
-        lnk[u].insert(make_pair(v,i)); //用pair的first存储相邻点，second存储边的编号
+        lnk[u].insert(make_pair(v,i)); //用set存储，用pair的first存储相邻点，second存储边的编号
         lnk[v].insert(make_pair(u,i)); //这样就可以直接给邻接表排序
     }
     if(n==m){
