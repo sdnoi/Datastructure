@@ -39,13 +39,15 @@ inline void solve1(){
         int now = q[l++];
         for(int itr(fir[now]); itr; itr = e[itr].nxt){
             if(in[e[itr].v] <= 1) continue;
-            --in[e[itr].v]; ontre[itr >> 1] = true;
+            --in[e[itr].v];
+            ontre[itr >> 1] = true;
             if(in[e[itr].v] == 1) q[++r] = e[itr].v;
         }
     }
     for(int i(1); i <= m; ++i){
         if(!ontre[i]){
-            cut = i; cnts = 0; bool flag = false;
+            cut = i; //枚举删除的边
+            cnts = 0; bool flag = false;
             if(solve(1, -1, flag)){
                 for(int j(1); j <= n; ++j){
                     ans[j] = tmp[j];
@@ -61,7 +63,7 @@ void solve2(int now, int fr){
         if(e[itr].v == fr) continue;
         val[now][++sons] = e[itr].v;
     }
-    std::sort(val[now] + 1, val[now] + sons + 1);
+    std::sort(val[now] + 1, val[now] + sons + 1);//排序
     for(int i(1); i <= sons; ++i){
         solve2(val[now][i], now);
     }
@@ -75,7 +77,7 @@ int main(){
         add(u, v); add(v, u); ++in[u]; ++in[v];
     }
     if(n == m)  solve1();
-    else  solve2(1, -1); 
+    else  solve2(1, -1);
     print();
     return 0;
 }
