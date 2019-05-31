@@ -49,8 +49,8 @@ void work(int x, int y) {
 void dfs1(int x) {
     dfn[x] = ++t;
     for (int i = Head[x]; i; i = Next[i])
-        if (i != (a[x] ^ 1) && i <= (m << 1 | 1)) {
-            if (!dfn[Edge[i]]) {
+        if (i != (a[x] ^ 1) && i <= (m << 1 | 1)) {//i不为树边的反向边即不为指向父亲的边，且i小于等于2*m+1
+            if (!dfn[Edge[i]]) {//如果Edge[i]还没被访问
                 b[Edge[i]] = b[x] + Leng[i];//树中点到根的距离，不一定等于原图中点到根的最短路，因为经过树（n-1条边）比图（m条边）减少了的那些边的距离可能更短
                 a[Edge[i]] = i;//树边
                 dfs1(Edge[i]);
