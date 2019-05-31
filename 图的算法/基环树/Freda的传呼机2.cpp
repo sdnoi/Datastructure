@@ -51,7 +51,7 @@ void dfs1(int x) {
     for (int i = Head[x]; i; i = Next[i])
         if (i != (a[x] ^ 1) && i <= (m << 1 | 1)) {
             if (!dfn[Edge[i]]) {
-                b[Edge[i]] = b[x] + Leng[i];//树中点到根的距离，不一定等于原图中点到根的最短路，因为树比图少的边可能更好
+                b[Edge[i]] = b[x] + Leng[i];//树中点到根的距离，不一定等于原图中点到根的最短路，因为经过树（n-1条边）比图（m条边）减少了的那些边的距离可能更短
                 a[Edge[i]] = i;//树边
                 dfs1(Edge[i]);
             } else if (dfn[Edge[i]] < dfn[x]) {//找到环了
