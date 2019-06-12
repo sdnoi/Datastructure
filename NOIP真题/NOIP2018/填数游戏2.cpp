@@ -46,6 +46,6 @@ int main() {
     else//(4*4+1*4）*3^(m-n-1)*2^(n-1)
       res = (res + 20LL * modpow(3, m - n - 1) % mod * modpow(2, n - 1)) % mod;
 
-    return printf("%lld\n", res * 2 % mod) * 0;
+    return printf("%lld\n", res * 2 % mod) * 0; //res乘以第一个格子的两种填法
     return 0;
 }
