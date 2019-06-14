@@ -54,7 +54,7 @@ void work() {
 			if (i + 1 >= j) {//全部都满足要求，即任意两条都满足构成一个赛道的条件
 				s[++top] = i;
 				dp[pos].ans += top / 2;// 赛道增加数量
-				if (top % 2 == 1) //计数条路，就还剩一条路没组成赛道，那么就选一条最大的突围出去
+				if (top % 2 == 1) //奇数条路，就还剩一条路没组成赛道，那么就选一条最大的突围出去
                     dp[pos].res = max(dp[pos].res, len[s[1]]);
 				break;
 			} else if (top != 0) //与len[i]搭配得最好的，即满足len[i]+len[j]>=mid 的最小值时取得的j
