@@ -9,7 +9,7 @@ bool dfs(int now) {
 	if (now == dep) return ans[now] == n;
 	bool v[N];
 	memset(v, 0, sizeof(v));
-	for (int i = now; i; i--)
+	for (int i = now; i; i--)//优化搜索顺序
 		for (int j = i; j; j--) {
 			int num = ans[i] + ans[j];
 			if (num <= n && num > ans[now] && !v[num]) {//num大于ans[now]保证了是递增的，以免冗余
