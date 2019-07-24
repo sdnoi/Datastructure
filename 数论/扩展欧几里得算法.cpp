@@ -1,3 +1,10 @@
+/*
+原理：裴蜀定理，两个数a,b,可线性表示出的最小正整数为gcd(a,b)，即ax+by=gcd(a,b)
+因此：bx'+(a%b)y'=gcd(b,a%b)=gcd(a,b)=ax+by
+则：bx'+(a%b)y'=bx'+(a-a/b*b)y'=ay'+b(x'-a/b*y')
+即：x=y',y=(x'-a/b*y')
+*/
+
 #include<cstdio>
 using namespace std;
 
