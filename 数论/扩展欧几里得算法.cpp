@@ -41,6 +41,14 @@ int exgcd1(int a, int b, int &x, int &y)//我写的函数
     y=x2-a/b*y2;
     return r;
 }
+void exgcd2(LL a, LL b, LL &x, LL &y) {//简洁的写法
+	if (b == 0) {
+		x = 1;y = 0;
+	} else {
+		exgcd(b, a%b, y, x);//此处传参数的顺序是y,x，不是x,y
+		y -= (a/b) * x;
+	}
+}
 int main() {
    int a,b,x,y,x1,y1;
    scanf("%d%d",&a,&b);
