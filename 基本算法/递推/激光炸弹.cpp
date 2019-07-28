@@ -1,28 +1,44 @@
 /*
 直接暴力做前缀和，再暴力枚举右下节点即可，注意常数。
+这道题有一个坑，就是边界上的点不算，所以我们要求 边长为R-1的矩形.
 */
-#include <cstdio>
-#include <iostream>
-#include <cstring>
-#include <cmath>
+##include<stdio.h>
+#include<iostream>
+#include<math.h>
 using namespace std;
- 
-int a[5010][5010]={0};
-int main(){
-	int n,r;
-	scanf("%d%d",&n,&r);
-	int i,j,ans=0;
-	for (i=1; i<=n; i++){
-		int u,v,c; scanf("%d%d%d",&u,&v,&c);
-		a[u+1][v+1]+=c;
+int map[5005][5005]={0};
+//int dp[5005][5005]={0};
+int main()
+{
+	int N,R;
+	int x,y,w;
+	cin>>N>>R;
+	int n = R,m = R;
+	for(int i=0;i<N;i++)
+	{
+		cin>>x>>y>>w;
+		x++; y++;
+		map[x][y]+=w;
+		n = max(n,x);
+		m = max(m,y);
 	}
-	for (i=1; i<=5001; i++)
-		for (j=1; j<=5001; j++) a[i][j]+=a[i-1][j];
-	for (i=1; i<=5001; i++)
-		for (j=1; j<=5001; j++) a[i][j]+=a[i][j-1];
-	for (i=r; i<=5001; i++)
-      for (j=r; j<=5001; j++)
-        ans=max(ans,a[i][j]+a[i-r][j-r]-a[i][j-r]-a[i-r][j]);
-    printf("%d",ans);
-	return 0;
+	for(int i=1;i<=n;i++)
+	{
+		for(int j=1;j<=m;j++)
+		{
+			map[i][j] +=map[i-1][j]+map[i][j-1]-map[i-1][j-1];
+		}
+	}
+	int ans = 0;
+	for(int i=R;i<=n;i++)
+	{
+		for(int j=R;j<=m;j++)
+		{
+			int tmp = map[i][j]-map[i-R][j]-map[i][j-R]+map[i-R][j-R];
+			ans = max(ans,tmp);
+		}
+	}
+	cout<<ans<<endl;
+ }
+
 
