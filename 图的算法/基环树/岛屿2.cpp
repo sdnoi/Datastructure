@@ -19,7 +19,7 @@ inline void add(int x, int y, int z) {
 
 void bfs(int s, int t) {
 	int l = 1, r = 1;
-	c[q[1]=s] = t;//点属于连通块t
+	c[q[1]=s] = t;//点s属于连通块t
 	while (l <= r) {
 		for (int i = Head[q[l]]; i; i = Next[i])
 			if (!c[Edge[i]]) c[q[++r]=Edge[i]] = t;
@@ -35,8 +35,8 @@ void topsort() {//从儿子到父亲向上一层层的搜索，最多到达环�
 		if (du[i] == 1) q[++r] = i;
 	while (l <= r) {
 		for (int i = Head[q[l]]; i; i = Next[i])
-			if (du[Edge[i]] > 1) { //q[l]实际上是edge[i]的儿子
-				d[c[q[l]]] = max(d[c[q[l]]], f[q[l]] + f[Edge[i]] + Leng[i]);
+			if (du[Edge[i]] > 1) { //q[l]实际上是Edge[i]的儿子
+				d[c[q[l]]] = max(d[c[q[l]]], f[q[l]] + f[Edge[i]] + Leng[i]);//目前找到的本块的最长链的值（不经过环上点）
 				f[Edge[i]] = max(f[Edge[i]], f[q[l]] + Leng[i]);//edge[i]能走到的最远距离
 				if (--du[Edge[i]] == 1) q[++r] = Edge[i];//环上的点进不了队
 			}
@@ -47,36 +47,36 @@ void topsort() {//从儿子到父亲向上一层层的搜索，最多到达环�
 void dp(int t, int x) {
 	int m = 0, y = x, k, z = 0;
 	do {
-		a[++m] = f[y];
+		a[++m] = f[y];//环上点(不经过环)能到达的最远距离存在a数组中，同时给环上的点编号
 		du[y] = 1;
 		for (k = Head[y]; k; k = Next[k])
-			if (du[Edge[k]] > 1) {
-				b[m+1] = b[m] + Leng[k];
-				y = Edge[k];
+			if (du[Edge[k]] > 1) {  //环上
+				b[m+1] = b[m] + Leng[k];//前缀和
+				y = Edge[k];//环上下一个点
 				break;
 			}
-	} while (k);
-	if (m == 2) {
+	} while (k);//当k为0，说明不是通过break跳出内层for循环的。即把环上的点都遍历了，x是环上第一个点，y是环上最后一个点
+	if (m == 2) { //环上只有两个点
 		for (int i = Head[y]; i; i = Next[i])
-			if (Edge[i] == x) z = max(z, Leng[i]);
+			if (Edge[i] == x) z = max(z, Leng[i]); //x到y之间最长的那条边
 		d[t] = max(d[t], f[x] + f[y] + z);
 		return;
 	}
 	for (int i = Head[y]; i; i = Next[i])
 		if (Edge[i] == x) {
-			b[m+1] = b[m] + Leng[i];
+			b[m+1] = b[m] + Leng[i]; //b[m+1]环上一圈的长度
 			break;
 		}
-	for (int i = 1; i < m; i++) {
+	for (int i = 1; i < m; i++) { //把环延长一倍
 		a[m+i] = a[i];
 		b[m+i] = b[m+1] + b[i];
 	}
 	int l = 1, r = 1;
 	q[1] = 1;
 	for (int i = 2; i < (m << 1); i++) {
-		if (l <= r && i - q[l] >= m) ++l;
-		d[t] = max(d[t], a[i] + a[q[l]] + b[i] - b[q[l]]);
-		while (l <= r && a[q[r]] - b[q[r]] <= a[i] - b[i]) --r;
+		if (l <= r && i - q[l] >= m) ++l;//不能超过一圈
+		d[t] = max(d[t], a[i] + a[q[l]] + b[i] - b[q[l]]);//找本块最长链
+		while (l <= r && a[q[r]] - b[q[r]] <= a[i] - b[i]) --r;//在单调队列中为i点找位置
 		q[++r] = i;
 	}
 }
@@ -91,8 +91,7 @@ int main() {
 	}
 	int t = 0;
 	for (int i = 1; i <= n; i++)
-		if (!c[i])
-            bfs(i, ++t);//连通块
+	     if (!c[i])   bfs(i, ++t);//连通块
 	topsort();
 	for (int i = 1; i <= n; i++)
 		if (du[i] > 1 && !v[c[i]]) { //度大于1的点是环上的点
